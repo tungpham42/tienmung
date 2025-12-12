@@ -19,6 +19,7 @@ import {
   GiftFilled,
   SmileFilled,
   UsergroupAddOutlined,
+  ReloadOutlined, // Import thêm icon Reset
 } from "@ant-design/icons";
 
 const { Option } = Select;
@@ -30,6 +31,12 @@ export const CalculatorTab: React.FC = () => {
   const onFinish = (values: CalculatorInput) => {
     const amount = calculateGiftAmount(values);
     setSuggestedAmount(amount);
+  };
+
+  // Hàm xử lý khi bấm nút Reset
+  const onReset = () => {
+    form.resetFields(); // Đưa form về trạng thái initialValues
+    setSuggestedAmount(0); // Ẩn kết quả tính toán
   };
 
   return (
@@ -190,22 +197,47 @@ export const CalculatorTab: React.FC = () => {
           </div>
         </Card>
 
-        <Button
-          type="primary"
-          htmlType="submit"
-          icon={<GiftFilled />}
-          block
-          size="large"
-          style={{
-            height: 56,
-            fontSize: 18,
-            borderRadius: 28,
-            background: "linear-gradient(135deg, #FF9A8B 0%, #FF6A88 100%)",
-            border: "none",
-          }}
-        >
-          Tính Phong Bì Ngay
-        </Button>
+        {/* Action Buttons Area */}
+        <div style={{ display: "flex", gap: 12 }}>
+          {/* Nút Reset (Secondary Action) */}
+          <Button
+            htmlType="button"
+            onClick={onReset}
+            size="large"
+            icon={<ReloadOutlined />}
+            style={{
+              flex: 1, // Chiếm 1 phần
+              height: 56,
+              borderRadius: 28,
+              border: "2px solid #F7D9C4",
+              color: "#E07A5F",
+              fontSize: 16,
+              background: "white",
+              fontWeight: 700,
+            }}
+          >
+            Làm lại
+          </Button>
+
+          {/* Nút Submit (Primary Action) */}
+          <Button
+            type="primary"
+            htmlType="submit"
+            icon={<GiftFilled />}
+            size="large"
+            style={{
+              flex: 2, // Chiếm 2 phần (lớn hơn nút Reset)
+              height: 56,
+              fontSize: 18,
+              borderRadius: 28,
+              background: "linear-gradient(135deg, #FF9A8B 0%, #FF6A88 100%)",
+              border: "none",
+              boxShadow: "0 4px 15px rgba(255, 106, 136, 0.3)",
+            }}
+          >
+            Tính Tiền
+          </Button>
+        </div>
       </Form>
 
       {suggestedAmount > 0 && (
